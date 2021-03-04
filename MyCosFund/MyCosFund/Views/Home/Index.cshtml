@@ -1,0 +1,78 @@
+﻿@model IEnumerable<MyCosFund.Models.ProvidenceFundModels>
+
+@{ 
+    decimal sumTotalProvidenceFund = Model.Sum(s => s.TotalProvidenceFund ?? 0);
+}
+<div id="content">
+    <h5 class="text-info">Total Providence Fund : @sumTotalProvidenceFund.ToString("N2")</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th style="width:30%;">Employee Name</th>
+                <th>Start work date</th>
+                <th class="text-right">Current Salary</th>
+                <th class="text-right">Current Providence Fund Rate</th>
+                <th class="text-right">Total Providence Fund </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr style="cursor:pointer;" onclick="EmployeeSalaryDetail('@item.Employee.id')">
+                    <td>
+                        @if (item.Employee != null)
+                        {
+                            <span>@item.Employee.first_name @item.Employee.last_name</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.Employee != null)
+                        {
+                            <span>@item.Employee.start_work_date.ToString("dd MMMM yyyy")</span>
+                        }
+                    </td>
+                    <td class="text-right">
+                        @if (item.Employee != null && item.Employee.salary != null)
+                        {
+                            <span>@item.Employee.salary.ToString("N2")</span>
+                        }
+                    </td>
+                    <td class="text-right">
+                        <span>@item.Employee.pvd_fund_rate.ToString("N0")</span>
+                    </td>
+                    <td class="text-right">
+                        @if (item.TotalProvidenceFund != null)
+                        {
+                            @item.TotalProvidenceFund.Value.ToString("N2")
+                        }
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div id="modalcontent-div"></div>
+    </div>
+</div>
+
+<script>
+    function EmployeeSalaryDetail(employeeId) {
+        $.ajax({
+            url: '@Url.Action("_EmployeeSalaryDetailModalPartial", "Home")',
+            data: { employeeId: employeeId },
+            dataType: "html",
+            success: function (result) {
+                $('#modalcontent-div').html(result)
+                $('#modal').modal('show')
+            },
+            error: function () {
+
+            }
+        });
+    }
+</script>

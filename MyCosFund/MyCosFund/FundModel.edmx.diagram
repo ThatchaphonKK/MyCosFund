@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="35c86c6ed6324c649af836034b4adca5" Name="Diagram1">
+        <EntityTypeShape EntityType="mycos_fundModel.emp_salary_statement" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="mycos_fundModel.employee" Width="1.5" PointX="2.75" PointY="0.75" />
+        <AssociationConnector Association="mycos_fundModel.FK_emp_salary_statement_employee" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

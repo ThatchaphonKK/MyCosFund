@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="mycos_fundModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="emp_salary_statement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="empid" Type="int" />
+          <Property Name="years" Type="int" />
+          <Property Name="salary" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="pvd_fund_rate" Type="int" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="date_of_birth" Type="date" Nullable="false" />
+          <Property Name="start_work_date" Type="date" Nullable="false" />
+          <Property Name="salary" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="pvd_fund_rate" Type="decimal" Precision="4" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_emp_salary_statement_employee">
+          <End Role="employee" Type="Self.employee" Multiplicity="0..1" />
+          <End Role="emp_salary_statement" Type="Self.emp_salary_statement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emp_salary_statement">
+              <PropertyRef Name="empid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mycos_fundModelStoreContainer">
+          <EntitySet Name="emp_salary_statement" EntityType="Self.emp_salary_statement" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_emp_salary_statement_employee" Association="Self.FK_emp_salary_statement_employee">
+            <End Role="employee" EntitySet="employee" />
+            <End Role="emp_salary_statement" EntitySet="emp_salary_statement" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mycos_fundModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="mycos_fundEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="emp_salary_statement" EntityType="mycos_fundModel.emp_salary_statement" />
+          <EntitySet Name="employees" EntityType="mycos_fundModel.employee" />
+          <AssociationSet Name="FK_emp_salary_statement_employee" Association="mycos_fundModel.FK_emp_salary_statement_employee">
+            <End Role="employee" EntitySet="employees" />
+            <End Role="emp_salary_statement" EntitySet="emp_salary_statement" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="emp_salary_statement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="empid" Type="Int32" />
+          <Property Name="years" Type="Int32" />
+          <Property Name="salary" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="pvd_fund_rate" Type="Int32" />
+          <NavigationProperty Name="employee" Relationship="mycos_fundModel.FK_emp_salary_statement_employee" FromRole="emp_salary_statement" ToRole="employee" />
+        </EntityType>
+        <EntityType Name="employee">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="last_name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date_of_birth" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="start_work_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="salary" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="pvd_fund_rate" Type="Decimal" Nullable="false" Precision="4" Scale="2" />
+          <NavigationProperty Name="emp_salary_statement" Relationship="mycos_fundModel.FK_emp_salary_statement_employee" FromRole="employee" ToRole="emp_salary_statement" />
+        </EntityType>
+        <Association Name="FK_emp_salary_statement_employee">
+          <End Type="mycos_fundModel.employee" Role="employee" Multiplicity="0..1" />
+          <End Type="mycos_fundModel.emp_salary_statement" Role="emp_salary_statement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="employee">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="emp_salary_statement">
+              <PropertyRef Name="empid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mycos_fundModelStoreContainer" CdmEntityContainer="mycos_fundEntities">
+          <EntitySetMapping Name="emp_salary_statement">
+            <EntityTypeMapping TypeName="mycos_fundModel.emp_salary_statement">
+              <MappingFragment StoreEntitySet="emp_salary_statement">
+                <ScalarProperty Name="pvd_fund_rate" ColumnName="pvd_fund_rate" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="years" ColumnName="years" />
+                <ScalarProperty Name="empid" ColumnName="empid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="employees">
+            <EntityTypeMapping TypeName="mycos_fundModel.employee">
+              <MappingFragment StoreEntitySet="employee">
+                <ScalarProperty Name="pvd_fund_rate" ColumnName="pvd_fund_rate" />
+                <ScalarProperty Name="salary" ColumnName="salary" />
+                <ScalarProperty Name="start_work_date" ColumnName="start_work_date" />
+                <ScalarProperty Name="date_of_birth" ColumnName="date_of_birth" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
