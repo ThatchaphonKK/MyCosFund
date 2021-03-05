@@ -13,12 +13,13 @@
                 <th class="text-right">Current Salary</th>
                 <th class="text-right">Current Providence Fund Rate</th>
                 <th class="text-right">Total Providence Fund </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr style="cursor:pointer;" onclick="EmployeeSalaryDetail('@item.Employee.id')">
+                <tr>
                     <td>
                         @if (item.Employee != null)
                         {
@@ -45,6 +46,9 @@
                         {
                             @item.TotalProvidenceFund.Value.ToString("N2")
                         }
+                    </td>
+                    <td>
+                        <button onclick="EmployeeSalaryDetail('@item.Employee.id')" class="btn btn-primary btn-sm" type="button">Detail</button>
                     </td>
                 </tr>
             }
